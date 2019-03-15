@@ -54,14 +54,6 @@ public class MainActivity extends Activity {
         final MediaSync mediaSync = new MediaSync();
         mediaSync.setSurface(mSurface);
         final Surface inputSurface = mediaSync.createInputSurface();
-        final MediaFormat videoFormat = MediaFormat.createVideoFormat("video/avc", 1920, 1080);
-        final MediaCodec mediaCodec;
-        try {
-            mediaCodec = MediaCodec.createDecoderByType("video/avc");
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
-        mediaCodec.configure(videoFormat, inputSurface, null, 0);
 
         final AudioTrack audioTrack = new AudioTrack.Builder()
                 .setAudioAttributes(new AudioAttributes.Builder()
@@ -77,7 +69,6 @@ public class MainActivity extends Activity {
         mediaSync.setAudioTrack(audioTrack);
 
         mediaSync.release();
-        mediaCodec.release();
         inputSurface.release();
         audioTrack.release();
 
